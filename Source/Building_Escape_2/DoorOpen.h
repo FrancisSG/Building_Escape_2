@@ -15,7 +15,7 @@ class BUILDING_ESCAPE_2_API UDoorOpen : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UDoorOpen();
-	void OpenDoor();
+	void OpenDoor(float DeltaTime);
 
 protected:
 	// Called when the game starts
@@ -30,7 +30,7 @@ FRotator InitialRotation;
 FRotator CurrentRotation;
 
 UPROPERTY(EditAnywhere)
-float TargetRotation = 90.f;
+FRotator TargetRotation = {0.f, 90.f, 0.f};
 
 
 };
