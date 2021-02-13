@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Engine/TriggerVolume.h"
 #include "DoorOpen.generated.h"
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -30,7 +32,13 @@ FRotator InitialRotation;
 FRotator CurrentRotation;
 
 UPROPERTY(EditAnywhere)
-FRotator TargetRotation = {0.f, 90.f, 0.f};
+float TargetRotation = 90.f;
+
+UPROPERTY(EditAnywhere)
+ATriggerVolume* PressurePlate = nullptr;
+
+// Find Pressure Plate
+void FindPressurePlate() const;
 
 
 };
