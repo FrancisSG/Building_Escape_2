@@ -19,8 +19,9 @@ void UDoorOpen::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+
+	UE_LOG(LogTemp, Warning, TEXT("%s is attached!"), *GetOwner()->GetName());
+
 }
 
 
@@ -29,6 +30,6 @@ void UDoorOpen::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	
 }
 

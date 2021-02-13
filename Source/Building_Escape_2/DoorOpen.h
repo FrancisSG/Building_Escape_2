@@ -15,6 +15,7 @@ class BUILDING_ESCAPE_2_API UDoorOpen : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UDoorOpen();
+	void OpenDoor();
 
 protected:
 	// Called when the game starts
@@ -24,5 +25,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+private:
+FRotator InitialRotation;
+FRotator CurrentRotation;
+
+UPROPERTY(EditAnywhere)
+float TargetRotation = 90.f;
+
+
 };
