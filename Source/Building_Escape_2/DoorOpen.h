@@ -18,6 +18,8 @@ public:
 	// Sets default values for this component's properties
 	UDoorOpen();
 	void OpenDoor(float DeltaTime);
+	float TotalMassOfActors() const;
+
 
 protected:
 	// Called when the game starts

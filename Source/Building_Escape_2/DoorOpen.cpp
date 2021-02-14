@@ -46,12 +46,18 @@ void UDoorOpen::FindPressurePlate() const
 void UDoorOpen::OpenDoor(float DeltaTime)
 {
 
-	CurrentRotation.Yaw = FMath::FInterpTo(CurrentRotation.Yaw, TargetRotation, DeltaTime, 10.f);
+	CurrentRotation.Yaw = FMath::FInterpTo(CurrentRotation.Yaw, TargetRotation, DeltaTime, 1.5f);
 	GetOwner()->SetActorRotation(CurrentRotation);
 
 }
 
 // Door opens when detects weight over 70 KG
+float UDoorOpen::TotalMassOfActors() const
+{	
+	float TotalMass = 0.f;
+
+	return TotalMass;
+}
 // Implement Close Door
 // Using World Time Get Seconds (After 3 seconds, automatically close the door)
 
