@@ -5,6 +5,7 @@ Saved
 Content
 .vscode
 .vs
+*.umap
 *.VC.db
 *.opensdf
 *.opendb

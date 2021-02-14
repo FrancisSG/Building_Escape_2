@@ -2,7 +2,9 @@
 
 
 #include "DoorOpen.h"
+#include "DrawDebugHelpers.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/PlayerController.h"
 #include "Math/UnrealMathUtility.h"
 
 
@@ -49,6 +51,12 @@ void UDoorOpen::OpenDoor(float DeltaTime)
 
 	CurrentRotation.Yaw = FMath::FInterpTo(CurrentRotation.Yaw, TargetRotation, DeltaTime, 1.5f);
 	GetOwner()->SetActorRotation(CurrentRotation);
+<<<<<<< Updated upstream
+=======
+}
+// Implement Close Door
+// Using World Time Get Seconds (After 3 seconds, automatically close the door)
+>>>>>>> Stashed changes
 
 }
 
@@ -89,5 +97,9 @@ void UDoorOpen::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 			OpenDoor(DeltaTime);
 	}
 
+<<<<<<< Updated upstream
 }
 
+=======
+}	
+>>>>>>> Stashed changes
