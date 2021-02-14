@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Grab.generated.h"
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -28,8 +30,11 @@ public:
 
 private:
 
-UPROPERTY(EditAnywhere)
+UPROPERTY()
 UInputComponent* InputComponent = nullptr;
+
+UPROPERTY()
+UPhysicsHandleComponent* PhysicsHandle = nullptr;
 
 UPROPERTY(EditAnywhere)
 float Reach = 250.f;

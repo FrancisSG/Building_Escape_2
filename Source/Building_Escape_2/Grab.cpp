@@ -24,7 +24,9 @@ void UGrab::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber attached!"));
 
+	// Assign values to pointers
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
 	SetupInputComponent();
 }
@@ -105,7 +107,22 @@ void UGrab::SetupInputComponent()
 
 void UGrab::Grab()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Grabbed!"));
+	//Debug
+	// UE_LOG(LogTemp, Warning, TEXT("Grabbed!"));
+
+	if(!PhysicsHandle)
+	{
+		UE_LOG(LogTemp, Error, TEXT("CRITICAL: Physics handle component was not found on base actor!"));
+		return;
+	}
+
+	PhysicsHandle->GrabComponentAtLocation
+	(
+		GetPhysicsActorInReach().GetComponent(),
+		NAME_None,
+		GetPlayerReach()
+	);
+
 }
 
 void UGrab::Release()
@@ -118,6 +135,15 @@ void UGrab::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentT
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	
+	if(!PhysicsHandle)
+	{
+		return;
+	}
+
+	if(PhysicsHandle->GrabbedComponent)
+	{
+		//Move the object we've grabbed.
+		PhysicsHandle->SetTargetLocation(GetPlayerReach());
+	}
 
 }
