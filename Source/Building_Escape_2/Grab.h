@@ -30,4 +30,11 @@ UPROPERTY(EditAnywhere)
 float Reach = 250.f;
 
 FVector GetPlayerReach() const;
+
+// Get the first physics object hit by the line trace
+void GetPhysicsActorInReach();
+
+// Get playerviewpointlocation
+FVector GetPlayerViewPointLocation() const;
+
 };

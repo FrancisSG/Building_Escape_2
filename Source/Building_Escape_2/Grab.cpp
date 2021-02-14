@@ -3,6 +3,7 @@
 #include "Grab.h"
 #include "Math/Color.h"
 #include "DrawDebugHelpers.h"
+#include "Engine/World.h"
 #define OUT
 
 // Sets default values for this component's properties
@@ -28,7 +29,6 @@ FVector UGrab::GetPlayerReach() const
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 
-	
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
 		OUT PlayerViewPointLocation,
 		OUT PlayerViewPointRotation);
@@ -51,10 +51,46 @@ FVector UGrab::GetPlayerReach() const
 	); */
 }
 
+FVector UGrab::GetPlayerViewPointLocation() const
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT PlayerViewPointLocation,
+		OUT PlayerViewPointRotation);
+
+	return PlayerViewPointLocation;
+}
+
+void UGrab::GetPhysicsActorInReach()
+{
+	
+	FCollisionQueryParams TraceParams(TEXT(""),false,GetOwner());
+
+	FHitResult Hit;
+	GetWorld()->LineTraceSingleByObjectType
+	(
+		OUT Hit,
+		GetPlayerViewPointLocation(),
+		GetPlayerReach(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		TraceParams
+	);
+
+	if(Hit.GetActor() != nullptr)
+	{
+			UE_LOG(LogTemp, Warning, TEXT("%s was hit!"), *Hit.GetActor()->GetName());
+	}
+}
+
 // Called every frame
 void UGrab::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	
+
+
 }
