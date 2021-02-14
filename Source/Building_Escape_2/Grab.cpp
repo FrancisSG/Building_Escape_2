@@ -19,8 +19,7 @@ void UGrab::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	UE_LOG(LogTemp, Warning, TEXT("Grabber attached!"));
 }
 
 

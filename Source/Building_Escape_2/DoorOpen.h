@@ -18,6 +18,8 @@ public:
 	// Sets default values for this component's properties
 	UDoorOpen();
 	void OpenDoor(float DeltaTime);
+	void CloseDoor(float DeltaTime);
+
 	float TotalMassOfActors() const;
 
 
@@ -44,6 +46,12 @@ void FindPressurePlate() const;
 
 UPROPERTY(EditAnywhere)
 float MassToOpen = 50.f;
+
+// Time vars
+float OnPressurePlateTime = 0.f;
+UPROPERTY(EditAnywhere)
+float CloseDoorDelay = 3.f;
+ 
 
 
 
