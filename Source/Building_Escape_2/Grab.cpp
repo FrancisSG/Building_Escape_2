@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Grab.h"
+#include "Math/Color.h"
+#include "DrawDebugHelpers.h"
+#define OUT
 
 // Sets default values for this component's properties
 UGrab::UGrab()
@@ -13,7 +15,6 @@ UGrab::UGrab()
 	// ...
 }
 
-
 // Called when the game starts
 void UGrab::BeginPlay()
 {
@@ -22,12 +23,38 @@ void UGrab::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Grabber attached!"));
 }
 
+FVector UGrab::GetPlayerReach() const
+{	
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+
+	
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT PlayerViewPointLocation,
+		OUT PlayerViewPointRotation);
+
+	// FVector LineTraceEnd = PlayerViewPointLocation + FVector(0.f, 0.f, 100.f);
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
+
+	return LineTraceEnd;
+
+	/* DrawDebugLine
+	(
+		GetWorld(),
+		PlayerViewPointLocation,
+		LineTraceEnd,
+		FColor(0, 255, 0),
+		false,
+		0.f,
+		0,
+		5.f
+	); */
+}
 
 // Called every frame
-void UGrab::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UGrab::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	
 }
-
