@@ -42,5 +42,9 @@ ATriggerVolume* PressurePlate = nullptr;
 // Find Pressure Plate
 void FindPressurePlate() const;
 
+UPROPERTY(EditAnywhere)
+float MassToOpen = 50.f;
+
+
 
 };

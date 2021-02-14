@@ -2,6 +2,7 @@
 
 
 #include "DoorOpen.h"
+#include "GameFramework/Actor.h"
 #include "Math/UnrealMathUtility.h"
 
 
@@ -56,6 +57,22 @@ float UDoorOpen::TotalMassOfActors() const
 {	
 	float TotalMass = 0.f;
 
+	if(!PressurePlate)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s's pressure plate is not assigned! Assign to get rid of Null Pointer exception."), *GetOwner()->GetName());
+		return TotalMass;
+	}
+
+	TArray<AActor *> OverlappingActors;
+	PressurePlate->GetOverlappingActors(OverlappingActors);
+
+	for(AActor *Actor : OverlappingActors)
+	{
+		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+		//For debugging
+		UE_LOG(LogTemp, Warning, TEXT("%s is on the pressure plate."), *GetOwner()->GetName());
+	}
+
 	return TotalMass;
 }
 // Implement Close Door
@@ -67,6 +84,10 @@ void UDoorOpen::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	OpenDoor(DeltaTime);
+	if (TotalMassOfActors() > MassToOpen)
+	{
+			OpenDoor(DeltaTime);
+	}
+
 }
 
