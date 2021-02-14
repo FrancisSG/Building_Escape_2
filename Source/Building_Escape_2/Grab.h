@@ -15,6 +15,8 @@ class BUILDING_ESCAPE_2_API UGrab : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UGrab();
+	void Grab();
+	void Release();
 
 protected:
 	// Called when the game starts
@@ -27,14 +29,20 @@ public:
 private:
 
 UPROPERTY(EditAnywhere)
+UInputComponent* InputComponent = nullptr;
+
+UPROPERTY(EditAnywhere)
 float Reach = 250.f;
 
 FVector GetPlayerReach() const;
 
 // Get the first physics object hit by the line trace
-void GetPhysicsActorInReach();
+FHitResult GetPhysicsActorInReach();
 
 // Get playerviewpointlocation
 FVector GetPlayerViewPointLocation() const;
+
+// Setup input bindings
+void SetupInputComponent();
 
 };

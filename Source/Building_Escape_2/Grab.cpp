@@ -1,7 +1,10 @@
 #include "Grab.h"
-#include "Math/Color.h"
+#include "Components/InputComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
+#include "Math/Color.h"
+
+
 #define OUT
 
 // Sets default values for this component's properties
@@ -20,6 +23,10 @@ void UGrab::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber attached!"));
+
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+
+	SetupInputComponent();
 }
 
 FVector UGrab::GetPlayerReach() const
@@ -62,7 +69,7 @@ FVector UGrab::GetPlayerViewPointLocation() const
 	return PlayerViewPointLocation;
 }
 
-void UGrab::GetPhysicsActorInReach()
+FHitResult UGrab::GetPhysicsActorInReach()
 {
 	
 	FCollisionQueryParams TraceParams(TEXT(""),false,GetOwner());
@@ -77,10 +84,33 @@ void UGrab::GetPhysicsActorInReach()
 		TraceParams
 	);
 
-	if(Hit.GetActor() != nullptr)
+	/* if(Hit.GetActor() != nullptr)
 	{
 			UE_LOG(LogTemp, Warning, TEXT("%s was hit!"), *Hit.GetActor()->GetName());
+			return Hit;
+	} */
+	
+	return Hit;
+
+}
+
+void UGrab::SetupInputComponent()
+{
+	if(InputComponent)
+	{
+		InputComponent->BindAction(TEXT("Grab"), IE_Pressed, this, &UGrab::Grab);
+		InputComponent->BindAction(TEXT("Grab"), IE_Released, this, &UGrab::Release);
 	}
+}
+
+void UGrab::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabbed!"));
+}
+
+void UGrab::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Released!"));
 }
 
 // Called every frame
@@ -89,6 +119,5 @@ void UGrab::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentT
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	
-
 
 }
