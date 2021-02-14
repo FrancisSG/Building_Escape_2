@@ -44,18 +44,6 @@ FVector UGrab::GetPlayerReach() const
 	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
 
 	return LineTraceEnd;
-
-	/* DrawDebugLine
-	(
-		GetWorld(),
-		PlayerViewPointLocation,
-		LineTraceEnd,
-		FColor(0, 255, 0),
-		false,
-		0.f,
-		0,
-		5.f
-	); */
 }
 
 FVector UGrab::GetPlayerViewPointLocation() const
@@ -77,6 +65,7 @@ FHitResult UGrab::GetPhysicsActorInReach()
 	FCollisionQueryParams TraceParams(TEXT(""),false,GetOwner());
 
 	FHitResult Hit;
+
 	GetWorld()->LineTraceSingleByObjectType
 	(
 		OUT Hit,
@@ -85,12 +74,6 @@ FHitResult UGrab::GetPhysicsActorInReach()
 		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
 		TraceParams
 	);
-
-	/* if(Hit.GetActor() != nullptr)
-	{
-			UE_LOG(LogTemp, Warning, TEXT("%s was hit!"), *Hit.GetActor()->GetName());
-			return Hit;
-	} */
 	
 	return Hit;
 
@@ -127,7 +110,15 @@ void UGrab::Grab()
 
 void UGrab::Release()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Released!"));
+	//Debug
+	// UE_LOG(LogTemp, Warning, TEXT("Released!"));
+
+	if(!PhysicsHandle)
+	{
+		return;
+	}
+
+	PhysicsHandle->ReleaseComponent();
 }
 
 // Called every frame

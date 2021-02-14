@@ -19,8 +19,8 @@ void UDoorOpen::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("%s is attached!"), *GetOwner()->GetName());
 
+	// Setup rotation variables
 	InitialRotation = GetOwner()->GetActorRotation();
-	// UE_LOG(LogTemp, Warning, TEXT("%s is the initial rotation!"), *InitialRotation.ToString());
 	CurrentRotation = InitialRotation;
 	TargetRotation += InitialRotation.Yaw;
 
@@ -48,7 +48,7 @@ void UDoorOpen::CloseDoor(float DeltaTime)
 	GetOwner()->SetActorRotation(CurrentRotation);
 }
 
-// Door opens when detects weight over 70 KG
+// Door opens when detects weight over x KG
 float UDoorOpen::TotalMassOfActors() const
 {
 	float TotalMass = 0.f;
@@ -66,13 +66,12 @@ float UDoorOpen::TotalMassOfActors() const
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 		//For debugging
-		UE_LOG(LogTemp, Warning, TEXT("%s is on the pressure plate."), *Actor->GetName());
+		// UE_LOG(LogTemp, Warning, TEXT("%s is on the pressure plate."), *Actor->GetName());
 	}
 
 	return TotalMass;
 }
-// Implement Close Door
-// Using World Time Get Seconds (After 3 seconds, automatically close the door)
+
 
 // Called every frame
 void UDoorOpen::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -85,7 +84,6 @@ void UDoorOpen::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 		OnPressurePlateTime = GetWorld()->GetTimeSeconds();
 		//Debug
 		// UE_LOG(LogTemp, Warning, TEXT("Current time: %f"), OnPressurePlateTime);
-
 	}
 	else
 	{
