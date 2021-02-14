@@ -13,3 +13,4 @@ Content
 *.suo
 *.xcodeproj
 *.xcworkspace
+Config/DefaultInput.ini
