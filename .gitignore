@@ -15,3 +15,4 @@ Config
 *.xcodeproj
 *.xcworkspace
 *.umap
+Content/BaseMap.umap
