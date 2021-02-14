@@ -68,7 +68,7 @@ float UDoorOpen::TotalMassOfActors() const
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 		//For debugging
-		UE_LOG(LogTemp, Warning, TEXT("%s is on the pressure plate."), *GetOwner()->GetName());
+		// UE_LOG(LogTemp, Warning, TEXT("%s is on the pressure plate."), *GetOwner()->GetName());
 	}
 
 	return TotalMass;
@@ -84,9 +84,15 @@ void UDoorOpen::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	if (TotalMassOfActors() > MassToOpen)
 	{
 		OpenDoor(DeltaTime);
+		OnPressurePlateTime = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("Current time: %f"), OnPressurePlateTime);
+
 	}
 	else
 	{
-		CloseDoor(DeltaTime);
+		if(GetWorld()->GetTimeSeconds() >= OnPressurePlateTime + CloseDoorDelay)
+		{
+					CloseDoor(DeltaTime);
+		}
 	}
 }

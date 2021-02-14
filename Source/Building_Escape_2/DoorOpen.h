@@ -47,6 +47,12 @@ void FindPressurePlate() const;
 UPROPERTY(EditAnywhere)
 float MassToOpen = 50.f;
 
+// Time vars
+float OnPressurePlateTime = 0.f;
+UPROPERTY(EditAnywhere)
+float CloseDoorDelay = 3.f;
+ 
+
 
 
 };
